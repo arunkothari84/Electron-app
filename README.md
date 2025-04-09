@@ -75,8 +75,8 @@ The output will be available in the `dist/` folder.
 .
 (c: drive)
 ├── ./Users/username/.shortcut-helper/
-   ├── icon.png
-   └── shortcut-helper-config.json
+      ├── icon.png
+      └── shortcut-helper-config.json
 
 ```
 
@@ -91,8 +91,8 @@ The output will be available in the `dist/` folder.
    ```
    (c: drive)
    ├── ./Users/username/.shortcut-helper/
-   ├── icon.png
-   └── shortcut-helper-config.json
+         ├── icon.png
+         └── shortcut-helper-config.json
    ```
 
    - `icon.png`: Custom icon to be used in the tray.
