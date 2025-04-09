@@ -70,10 +70,12 @@ The output will be available in the `dist/` folder.
 │   ├── preload/          # Preload scripts
 │   └── main.tsx          # React entry
 ├── public/               # Static assets (favicon, etc.)
-├── uses/username/.shortcut-helper/
+
+.
+(c: drive)
+├── ./Users/username/.shortcut-helper/
 │   ├── icon.png
 │   └── shortcut-helper-config.json
-├── icon.png              # App icon
 ├── package.json
 └── ...
 ```
@@ -123,9 +125,5 @@ The output will be available in the `dist/` folder.
 
 ## 📄 License
 
-MIT © [Your Name]
+MIT © Arun Kothari
 ```
-
----
-
-Let me know if you want this saved and sent as a file too!
