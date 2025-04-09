@@ -89,7 +89,8 @@ The output will be available in the `dist/` folder.
    Create the following folder and files:
 
    ```
-   ~/uses/your-username/.shortcut-helper/
+   (c: drive)
+   ├── ./Users/username/.shortcut-helper/
    ├── icon.png
    └── shortcut-helper-config.json
    ```
