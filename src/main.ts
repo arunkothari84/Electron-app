@@ -8,6 +8,7 @@ import {
 } from "electron";
 import path from "node:path";
 import started from "electron-squirrel-startup";
+import os from "os";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -59,7 +60,7 @@ const createWindow = () => {
   });
 
   if (!tray) {
-    tray = new Tray(path.join(__dirname, "assets", "icon.png")); // replace with your tray icon path
+    tray = new Tray(path.join(os.homedir(), ".shortcut-helper", "icon.png")); // replace with your tray icon path
     const contextMenu = Menu.buildFromTemplate([
       { label: "Open", click: () => mainWindow.show() },
       { label: "Quit", click: () => app.quit() },
