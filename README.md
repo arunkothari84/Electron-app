@@ -70,14 +70,14 @@ The output will be available in the `dist/` folder.
 │   ├── preload/          # Preload scripts
 │   └── main.tsx          # React entry
 ├── public/               # Static assets (favicon, etc.)
-
+├── package.json
+└── ...
 .
 (c: drive)
 ├── ./Users/username/.shortcut-helper/
-│   ├── icon.png
-│   └── shortcut-helper-config.json
-├── package.json
-└── ...
+   ├── icon.png
+   └── shortcut-helper-config.json
+
 ```
 
 ---
