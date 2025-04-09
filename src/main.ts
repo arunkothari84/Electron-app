@@ -58,6 +58,7 @@ const createWindow = () => {
       mainWindow.hide(); // Hide the window instead of closing it
     }
   });
+  // mainWindow.webContents.openDevTools();
 
   if (!tray) {
     tray = new Tray(path.join(os.homedir(), ".shortcut-helper", "icon.png")); // replace with your tray icon path

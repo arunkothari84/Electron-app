@@ -3,6 +3,9 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 
+// For reading .ini format
+import ini from "ini"; // You need to install this: npm install ini
+
 interface Shortcut {
   keys: string;
   action: string;
@@ -19,10 +22,16 @@ const defaultConfig: Config = {
   shortcuts: [],
 };
 
-const configPath = path.join(
+const configPath = path.join(os.homedir(), ".shortcut-helper", "config.json");
+
+// Path to the Redragon config file
+const redragonConfigPath = path.join(
   os.homedir(),
-  ".shortcut-helper",
-  "shortcut-helper-config.json"
+  "AppData",
+  "Roaming",
+  "REDRAGON Gaming Mouse",
+  "IMPACT",
+  "Config.ini"
 );
 
 async function ensureConfig() {
@@ -33,6 +42,20 @@ async function ensureConfig() {
       JSON.stringify(defaultConfig, null, 2),
       "utf-8"
     );
+  }
+}
+
+// Reads the ProfileID from the Redragon config file
+async function readProfileID(): Promise<number | null> {
+  try {
+    const data = await fs.promises.readFile(redragonConfigPath, "utf-8");
+    const parsed = ini.parse(data);
+    return parsed.Config?.ProfileID
+      ? parseInt(parsed.Config.ProfileID, 10)
+      : null;
+  } catch (err) {
+    console.error("Error reading Redragon config:", err);
+    return null;
   }
 }
 
@@ -54,6 +77,32 @@ contextBridge.exposeInMainWorld("configAPI", {
     fs.watch(configPath, (eventType) => {
       if (eventType === "change") {
         callback();
+      }
+    });
+  },
+  // Expose ProfileID getter
+  getProfileID: async () => {
+    return await readProfileID();
+  },
+  // Watch the Redragon INI file for changes
+  onProfileIDChange: (callback: (newProfileID: number | null) => void) => {
+    let lastProfileID: number | null = null;
+
+    const checkChange = async () => {
+      const newID = await readProfileID();
+      if (newID !== lastProfileID) {
+        lastProfileID = newID;
+        callback(newID);
+      }
+    };
+
+    // Initial read
+    checkChange();
+
+    fs.watch(redragonConfigPath, (eventType) => {
+      if (eventType === "rename") {
+        console.log("Detected change in Redragon config file.");
+        checkChange();
       }
     });
   },

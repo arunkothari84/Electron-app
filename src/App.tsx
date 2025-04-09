@@ -5,20 +5,34 @@ import ShortcutCard from "./ShortcutCard";
 function App() {
   const [query, setQuery] = useState("");
   const [config, setConfig] = useState({ title: "Loading...", shortcuts: [] });
+  const [profileID, setProfileID] = useState<number | null>(null);
 
   useEffect(() => {
-    const load = async () => {
+    const loadConfig = async () => {
       const data = await window.configAPI.getConfig();
       setConfig(data);
       console.log("Loaded config:", data);
     };
 
-    load();
+    const loadProfileID = async () => {
+      const id = await window.configAPI.getProfileID();
+      setProfileID(id);
+      console.log("Loaded ProfileID:", id);
+    };
 
-    // Listen for file changes
+    loadConfig();
+    loadProfileID();
+
+    // Watch config changes
     window.configAPI.onConfigChange(() => {
       console.log("Detected external config change.");
-      load();
+      loadConfig();
+    });
+
+    // Watch profile ID changes
+    window.configAPI.onProfileIDChange((newID: number | null) => {
+      console.log("Detected ProfileID change:", newID);
+      setProfileID(newID);
     });
   }, []);
 
