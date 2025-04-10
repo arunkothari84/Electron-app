@@ -11,15 +11,29 @@ interface Shortcut {
   action: string;
 }
 
+interface MouseConfig {
+  Profile: number;
+  Color: string;
+  Keys: {
+    [key: string]: string; // Keys are dynamic (e.g., "1", "2", ..., "12")
+  };
+}
+
 interface Config {
   title: string;
   shortcuts: Shortcut[];
+  powertoys: Shortcut[];
+  stickies: Shortcut[];
+  mouse: MouseConfig[];
 }
 
 // Default config structure
 const defaultConfig: Config = {
   title: "Shortcut Helper",
   shortcuts: [],
+  powertoys: [],
+  stickies: [],
+  mouse: [],
 };
 
 const configPath = path.join(os.homedir(), ".shortcut-helper", "config.json");

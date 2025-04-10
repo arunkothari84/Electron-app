@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  margin-bottom: 500px;
+}

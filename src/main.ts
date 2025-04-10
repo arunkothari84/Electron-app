@@ -35,6 +35,7 @@ const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     frame: false,
+    show: false,
     width: WINDOW_WIDTH,
     height: WINDOW_HEIGHT,
     x: Math.trunc(x),
@@ -44,6 +45,8 @@ const createWindow = () => {
       nodeIntegration: true,
     },
   });
+  mainWindow.setBackgroundColor("#111827");
+  mainWindow.maximize();
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
@@ -80,12 +83,23 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
-  // Create the browser window.
   globalShortcut.register("Control+Shift+H", () => {
     if (mainWindow) {
-      mainWindow.close();
+      if (mainWindow.isVisible()) {
+        mainWindow.hide(); // Hide if visible
+      } else {
+        mainWindow.show(); // Show if hidden
+        mainWindow.focus(); // Bring it to front
+      }
+    } else {
+      createWindow(); // Create if doesn't exist
     }
-    createWindow();
+  });
+
+  globalShortcut.register("Escape", () => {
+    if (mainWindow && mainWindow.isFocused()) {
+      mainWindow.hide(); // Hide the window when ESC is pressed
+    }
   });
 });
 
